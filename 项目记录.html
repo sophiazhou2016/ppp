@@ -1,0 +1,1845 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>项目记录</title>
+</head>
+
+<body>
+	<p>
+		192.168.1.10:13145@周荣晶 URL： http://signin.aliyun.com/1337439865801795/login.htm Username: yeshuangdong@ppdai.com Password:
+		sAjWlMEG78WaxyEtIoYx 192.168.1.10:13145 pdt_dev_mb *0SpKGw@jzHb7v%I
+	</p>
+	links : jsPlumb开发入门教程（实现html5拖拽连线） - http://blog.csdn.net/zhaoxy_thu/article/details/9532143
+	<br /> websocket - https://github.com/matthew-sun/blog/issues/21
+	<br /> git项目 - https://github.com/Kyligence
+	<br /> KAP手册 - https://kyligence.gitbooks.io/kap-manual/content/zh-cn/
+	<br />
+	<h2>问题</h2>
+	<pre>
+	1. 为什么zepto才会有移动端的点透问题？
+	2. websoket : https://github.com/matthew-sun/blog/issues/21
+		做的聊天室？
+	3. MVC 跟 MVVM 有什么差别？
+		MVC - 单向； MVVM： 双向。
+	4. Angularjs的mvvm中间 vm 是如何实现双向绑定的？
+	5. vue中子组件跟父组件如何通信？
+		通过子组件里面引用 props : ['message']；- 注意要用引号否则报错
+		a. 传递固定值
+			父组件 <child message="hello!"></child>
+
+		b. 传递变量
+			父组件 <child v-bind:messgae="parentMsg"></child> 
+		注意数组对象是引用类型，改变子组件会改变父组件。
+		引申问题：
+			两个同级组件如何通信？
+
+	6. vue里面事件 emit 怎么用？
+		子组件触发事件 $emit 事件A ； 父组件 注册事件 v-on:A = ''
+
+	7. css如何实现优雅降级？
+	8. Angularjs 指令里面的 $scope 的几种值以及意义？
+	9. 实现数组去重？
+	10. 取出数组重复的部分？
+	11. 给数组排序？
+	12. 一个数组，放进几个篮子中（需满足条件最大值-最小值 <= 2）? 
+	13. webpack
+		https://github.com/slashhuang/blog/issues/1
+
+</pre>
+	<h2>项目知识</h2>
+	<pre>
+
+<!-- 目前包括：机器学习，自然语言处理，智能分诊，智能诊断，智能检验与治疗，深度学习等 -->
+	- git sourceTree
+	- gulp
+	- bootstrap
+	- vue
+	- sass
+
+</pre>
+	<h2>项目结构</h2>
+	<pre>
+	
+	前端代码位置： resource
+					- assets
+
+	路由： routes
+			-web.php
+
+</pre>
+	<h2>
+		mac
+	</h2>
+	<pre>
+	command + 空格 ： + terminal.app   (打开系统命令行)
+
+</pre>
+	<h2>vuejs学习</h2>
+	<pre>
+	- 全局注册
+	Vue.component('my-component',{
+		template : '<div>a custom component! </div>'
+	});	
+</pre>
+	<h2>
+		项目知识点：
+	</h2>
+	<pre>
+	1. vue 里面如何设置id?
+		v-bind:id
+		:id="index" (for循环里面index表示索引，在in的参数最后一个)；
+		:id="'collapse' + index" （可以写表达式，扩充索引名字）.
+
+	2. vue 里面如何设置href?
+		v-bind:href="xxxxx"
+		v-bind指令可以在其名称后面带一个参数，中间放一个冒号隔开，这个参数通常是HTML元素的特性（attribute），例如：v-bind:class
+
+	3. vue 里面的computed 实时计算，检测到数据变动就会执行对应数据引用的函数，就像监控。
+
+	4. php 获取数组的长度：
+		count($data); 跟js .length 不一样。
+
+	5. php 循环：
+		@foreach ( $data['pageNums'] as $num)
+            ...html...
+        @endforeach
+		参数意义：
+			$data['pageNums'] ---- 数组
+			$num              ---- 每一项
+
+		@foreach ($data['items'] as $id => $item)
+            ...html
+        @endforeach
+        参数 $id 表示索引号。
+
+    6. php 条件判断：
+    	@if（）
+    	@else
+    	@endif
+
+    7. vue 里面的props 里面的变量是从父组件传过来的；
+    	如果要改变这个变量，可以在data里面修改，通过this.变量 ，注意加this。
+    	注意：最好不要修改这个变量，而是新建一个变量。
+    	并且这个变量需要在 data 里面返回了，具有 get set 属性 ，才能是响应式的。
+
+	8. git
+		git status 
+		git add
+		git commit
+
+	9. vue 为最常用的两个指令： v-bind 跟 v-on 提供缩写：
+		v-bind  -> :  如 v-bind:class -> :class
+		v-on    -> @  如 v-on:click   -> @click
+		:class="{'xx' : true}" - 注意加大括号{}
+
+	10. vue 绑定事件有两种形式：
+		a: @click="doSomething" 
+		b: @click="doSomething(参数)" - （$event ：事件对象）
+
+	11. slot 内容分发
+		<child >
+			<p slot='slotName'>我是slot 我要分发给我的子组件</p>
+		</child>
+
+		子组件template :
+			<header>
+				<slot name="slotName">我是写在子组件里面，但是不会显示出来</slot>	
+			</header>
+
+	12. slot 作用域插槽：
+		在父级中，具有特殊属性 scope 的 template 元素，表示它是作用域插槽的模板。
+
+	13. chalk :命令行彩色输出
+		semver : npm以及package.json解析版本号时的辅助模块，更为语义化
+		Mock.js 是一款模拟数据生成器
+
+	14. v-cloak:
+		<textarea style="width:900px;height: 100px;">
+			//example1:
+			<span>{{price}}</span>
+			//example2: 
+			<span v-bind="price"></span>
+			//example3: 
+			<span v-cloak>{{price}}</span>
+		</textarea>
+		2,3 没有闪烁，1有
+
+	15. vuex
+		vuex中用到的一个动态函数名的语法
+
+	16. 组件里面的data必须是个函数。
+	17. watch : 监控值得变化。
+		watch : {
+			value1 : function(newValue, oldValue){
+
+			}
+			// 或者
+			value1( newValue, oldValue ) {
+
+			}
+		}
+
+	18. vue-router
+
+	19. vuex 
+
+	20. vue 生命周期
+		beforeCreate : 创建之前    	- 数据,$el都不存在
+		created: 创建之后				- 数据存在,DOM 不存在
+		beforeMount : 实例化之前		- 数据在，DOM 是虚拟的
+		mounted : 实例化之后			- 数据在, DOM 变成真实的
+		beforeUpdate :更新前
+		updated: 更新之后
+		destroyed: 销毁
+
+	21. template 不仅是模板最外面的标签，同时，它也可以作为一个普通的标签使用。
+		template 是不会被渲染的，v-show 跟 template 不能同时使用。
+
+	22. git checkout package.json : 放弃本地的修改
+		git checkout new-restful2 : 切换分支
+		git brach : 查看当前的branch
+
+	23. vue-resource:
+		Vue.http 全局http
+
+		resource服务：
+		全局访问：Vue.resource
+		实例访问：this.$resource
+
+	24. vue_resource 跟 nprogress ：
+
+		1.引入依赖：
+
+			import NProgress from 'nprogress'
+			import 'nprogress/nprogress.css'
+
+		2.如果想ajax请求有progress，加载vue-resource的interceptors中：
+			使用inteceptor：
+			Vue.http.interceptors.push((request, next) => {
+			  NProgress.start();// 请求发送前
+
+			  next((response)=>{
+			    NProgress.done();// 收到请求后
+			    // 如果发生错误，统一处理错误
+
+			  });
+			});
+
+		3.如果想路由跳转有progress，加在vue-router的beforeEach和afterEach中：
+
+			router.beforeEach(transition => {
+			  NProgress.done();
+			});
+
+			router.afterEach(transition => {
+			  NProgress.start();
+			});
+	25. a) 计算属性 跟 methods 区别：
+
+			官网表明计算属性是基于它的依赖缓存。
+
+			计算属性只有在它的相关依赖发生改变时才会重新取值。这就意味着只要 message 没有发生改变，多次访问 reversedMessage 计算属性会立即返回之前的计算结果，而不必再次执行函数。
+
+			每当重新渲染的时候，method 调用总会执行函数。
+
+
+			也就是说只要不是直接使用浏览器刷新页面，当我们改变数据、DOM操作等引起页面重新渲染时，
+
+			计算属性会直接使用缓存，不会重新执行函数。适合那些计算量很大且改变频率很低的属性；
+
+			如果使用methods，每次页面重新渲染时都会重新执行methods函数。
+
+
+			一.computed适用于对多数据变动进行监听，然后维护一个状态（返回一个状态）。
+			二.watch适用于对一个数据监听，我们也可以通过这些变化去维护一个状态，但不适用于监听一个数据来进行复杂的逻辑操作。
+		b) computed 跟 watch 区别
+
+	26. bug 描述 报错处理：
+		Vuex 在使用 Mutation handler 显示unknown act
+		mutaction 也需要定义到type.js里面去
+
+	27. git
+		git status 查看状态 
+		git diff  查看差别
+		git checkout -f xx.json 放弃修改
+		git commit -m "#488 zrj" 提交代码
+		git checkout new-restful2 切换到 new-restful2分支
+		git pull 拉代码下来
+		git checkout zrj 切换到我的分支
+		git push -f origin zrj  提交到远程
+
+		git diff 版本1 版本2 index.html : 可以查看对比
+		git diff 版本1 版本2 index.html index.js  > aa.patch
+		git apply aa.patch 应用对的补丁
+		rm aa.patch
+
+	28. fixed bug描述：
+			项目中点击header(position:fixed;z-index未设置) 会弹出层（A: position:fixed; z-index:2001），有一个遮罩层（B - position:fixed; z-index:2000）.
+		正常情况:
+			A 应该会在B 的上面，但是这里因为父元素 header 也定位了fixed， 而遮罩层在header的上面，
+			所以 遮罩层也遮住了 A.
+		解决办法：
+			把header 定位成为absolute。
+		原因：
+			z-index 在chrome中，如果是两个fixed嵌套，会相对于fixed定位。
+	
+	29. 项目veux
+		1).server 里面定义请求；
+		2).在 store里面会调用 type.js 跟 api.js(聚合) 里定义的方法；
+		3).store里面定义action 跟 mutaction（需要存储到全局的菜用mutaction，不需要存储的话比如提交就可以
+			只用action）， 在action里面commit触发mutaction。(注意action跟mutaction都要存到type.js，
+			因为后面 ...mapaction 需要调用)；
+		4).this.$store.state.system.serverAboutKap 请求返回的变量，任何地方都可以访问到；
+	    
+	    遇到的坑: 	a) 注意异步请求之后写回调函数。
+					b) 父组件传入子组件的属性记得写冒号，才能是传过去一个对象，否则是一个不变的字符串。
+					c) Vuex 在使用 Mutation handler 显示unknown act, mutaction跟action都要
+						写到type里面去。
+
+	30. 原生js 如何检测一个元素绑定了事件？
+		getEventListeners(window)
+		getEventListeners(window).click -> array[2] 
+
+</pre>
+	<script type="text/javascript">
+		var Coder = function () {
+			var that = this;
+			return {
+				get name() {
+					if (that.name) {
+						return that.name
+					}
+					return '你还没有取名'
+				},
+				set name(val) {
+					console.log('你把名字修成了' + val)
+					that.name = val
+				}
+			}
+		};
+		var isMe = new Coder();
+		console.log(isMe.name) // 触发了get name 函数
+		isMe.name = '周神' // 触发了 set name 函数
+		console.log(isMe.name)
+		console.log(isMe)
+	</script>
+	<pre>
+	Cube的设计：
+		.维度
+			分析数据的角度 （group by, where Condition）
+		.度量
+			测量的数据 (count, sum, max...)
+
+	维度：对cube的复杂度起主要作用
+		-N维，有2N次方的cuboid
+		-Cuboid的大小，由其各个维度的基数决定
+		-查询都是按维度条件
+
+	Full Cube- 预聚合所有的维度的组合-维度爆炸
+	Partial Cube 
+
+	维度的选择：
+		-选择必需的维度
+		-选择适当颗粒度的维度（过细导致cube膨胀，也不要过粗）
+		-
+	维度间的关系（层级，推导）
+
+	查询模式(哪些维度查询的频率高，哪些组合经常/总是一起出现)
+
+	维度的编码
+		.将值转成长度一致的字节
+		.压缩作用
+	编码方式很多：Dict编码（映射）/ Fixed_length
+
+	维度的优化：
+		1. 强制维度（减少到1/2）
+		2. 层级维度（Hierachy ） - 2 M次方-> M+1;当层级>=3，效果明显
+		3. 可推导(Derived)维度
+		4. 组合维度(joint)-总是一起出现的维度
+
+	Rowkey
+		Mandatory filter条件前 频率高前 基数高前
+
+	度量：
+		-简单型 count sum min max
+		-复杂型 distinct count（去重）, top_N, raw_mesure
+
+	度量的使用
+		复杂度量分到多个column family
+
+	Cubed的构建
+		逐层构建 full Data -4D-3D-2D-1D-0D
+
+	HIVE table - 重分布table 
+
+	Cube的查询
+		SQL查询
+
+	computed: {
+	    serverAboutKap () {
+	      console.log('this.$store.state.system.serverAboutKap   --', this.$store.state.system.serverAboutKap)
+	      return this.$store.state.system.serverAboutKap
+	    }
+	}
+
+	读写操作：
+	-读 cube->hadoop
+	-写 cube->Hbase
+
+	AWS EMR 上的部署
+		开端口
+
+	用户验证
+		-ADMIN, modeler, anylyst(只读)
+		
+</pre>
+	<h2>项目进程</h2>
+	<pre>
+	2017.05.13
+		帮助弹出层 (两个fixed的bug, veux 流程, 父组件给子组件如何传递值) help.vue about_kap.vue
+	2017.05.15
+		monitor 页面
+			1. 作用域插槽 <template scope="xx">{{xx.text}}</template>
+				从子组件传 text 给父组件
+			2. filter怎么使用以及 过滤器的bug - 														简单过滤器任然报错的情况下，逻辑写到filter里面去，filter也不会很复杂
+				避免因为模板报错，无法定位
+			3. element-ui table 组件，@row-click事件给点击一行绑定事件，注意参数的形式
+			4. @click.stop  可以直接写，不用写=后面的内容，表示阻止冒泡
+	2017.05.16
+		monitor 页面 (monitor.vue   job_list.vue)
+			时间格式调整(复杂逻辑移出html,computed不能传参数，所以写到methods里面)
+			右侧弹层样式调整
+	2017.05.17
+		系统设置（弹层修改，弹层逻辑？？时间需要联动不？
+				tooltip content 用DOM填写，看源码, this.$slots.content）
+		用户管理
+	2017.05.18
+		dashborb 首页样式调整
+		系统设置
+			a)弹层逻辑？？
+			b) 时间联动(上一个月, 不能精确到小时分钟的，用选择错误提示用户)
+	2017.05.19
+		cube列表页
+		cube详情里的json
+		cube详情里的SQL展示样式美化
+		顶部toobar中用户名下面加setting的跳转
+		点击logo回dashboard
+		cube 按照model 筛选
+			a) element-ui 点击事件 @click.native 原生事件 原本组件不会触发click 现在可以了,vue自己的，原理未知？?
+			b) 子组件索引 (this.$ref.profile 只在组件渲染完成后才填充，仅仅作为一个直接访问子组件的应急方案--应当避免在模板或计算属性中使用$refs)
+			c) this.$message
+			d) 复制一个对象，但是断开引用关系 
+				var obj = {aa: 11, bb: 22};
+				var o = Object.create(obj);
+				o.aa = 33;
+				console.log(obj.aa); // 11
+				原理相当于:
+				var obj1 = {name : 'nick', age : 24};
+				function clone(obj){
+					var newObj = {};
+					newObj.__proto__ = obj; // obj的属性挂载到newObj的__proto__上面去了
+					return newObj;
+				}
+				var a1 = clone(obj1);
+				a1.name = 'elena'; // 给a1.name 赋值 ，其实__proto__里面还保存着name属性，值是11
+				console.log(obj1.name); // 'nick' 
+		2017.05.22
+			cube 详情页 sql: textarea 本来就是 \n 是回车 
+			1.       Project 的中英文
+			2.       Insight的中英文
+			json本身就是字符串格式
+			修改sandbox : vim /etc/hosts  就是修改hosts的id
+		2017.05.23
+			monitor 页面 bug :
+				日期GMT格式, 
+				进度显示最多两位小数
+
+		2017.05.24
+			修改bug及topbar的help下拉框增加KyBot自动上传
+				el-swicth @change的被封装了 
+		2017.05.26
+			继续完成KyBot自动上传功能
+			1.monitor 样式  调整下 不要有全局控制的css ok
+			2.About kap 弹层 logo 点击跳转公司官网  新开页面  http://kyligence.io/  ok
+			3.sort排序需要发后台排序方式      ok
+				git pull 连同后端代码一起拉下来
+				mvn install -DskipTests: 安装后端包
+				3次shift找文件 jobControllerV2
+			4. 诊断 dump 接口少了时间  ok
+		2017.05.27
+			job_list 加上诊断弹层
+			一键上传点击之后判断有没有登录，后续逻辑加上
+			同意协议的接口
+			绑定html : v-html="lang"
+
+			1）switch按钮始终显示
+			2）点击自动诊断 检测登录 检测是否已同意
+			3）help下面的登录框，登陆之后如果已经同意则 自动开启
+
+			monitor 按照修改时间排序  不起作用
+
+			VPN地址 ：corp.kyligence.io
+			公司邮箱账号密码
+			修改index.js里面的 'kylin/api/' 对应的地址
+		2017.05.28
+			git reset --hard 某个版本
+	        target: 'http://10.1.1.22:17070',
+			1. 解决冲突
+			2. add
+			3. rebase --continue
+
+			项目分解：
+				1. 检测是否已经开启服务
+				2. 检测是否已登录
+				3. 开启服务
+				4. 关闭服务
+				5. 获取是否同意协议
+				6. 同意协议
+
+				点击开始自动上传 跟 切换按钮状态都需要 检测登录 找到状态 再看是否已同意
+		2017.05.29
+			Vue：
+			父组件给子组件传递值，用prop属性 
+				1) 注意这个值需要加上冒号:
+				2) 子组件里面写的是props:['propname'] 而不是prop:['propname']
+				3) 如果子组件里需要有值 A 跟随传进来的prop发生变化，
+					a) computed 里面return，但是已经在data里面return了，
+					b) 还可以用watch 
+						watch: {
+							'propname': function(val){
+								this.A= !val
+							}
+						}
+		2017.05.30
+			退出登录命令：
+			curl -X POST \
+			  http://10.1.1.22:17070/kylin/api/kyaccount/logout \
+			  -H 'accept: application/vnd.apache.kylin-v2+json' \
+			  -H 'authorization: Basic QURNSU46S1lMSU4=' \
+			  -H 'cache-control: no-cache' \
+			  -H 'content-type: application/json'
+
+
+			  rm extensions/server/.kyaccount 
+
+		2017.05.31
+			点击顶部菜单help 登录弹框的中英文
+			job_list的手动下载诊断包链接调整
+			promise的catch
+		2017.06.01
+			project_list增加
+			894 issue
+		2017.06.02
+			抽象： 重要和不重要的
+			很多种design
+			1. message 取消按钮
+			2. form 
+			3. job_list 按钮点不了
+		2017.06.05
+			css 修改
+			1. diagnosis 诊断 去掉时间选择的取消按钮 ok
+			2. 时间选择最少5分钟之内   
+			3. 第2个选择时间的，第一次选择不能改变  ok
+
+		
+		2017.06.16
+			websocket - https://github.com/matthew-sun/blog/issues/21
+			轮询- setInterval定时器
+			长连接- 发送请求超时之后继续发送请求
+
+			使用WebSocket有什么好处：
+				WebSocket 能节约带宽、CPU 资源并减少延迟。
+				WebSocket 基于事件交流，通信简单。
+				WebSocket 可以跨域。
+
+		2017.06.20
+			进入e盘-  1. e: ;  2:  cd e:\
+			git bash 下操作文件及文件夹命令
+				1， cd : 切换到哪个目录下， 如 cd e:\fff  切换 E 盘下面的fff 目录。
+
+				　　当我们用cd 进入文件夹时,我们可以使用 通配符*, cd f*,  如果E盘下只有一个f开头的文件夹,它就会进入到这个文件夹.
+
+				2， cd .. 回退到上一个目录， 注意，cd 和两个点点..之间有一个空格。
+
+				3， pwd : 显示当前目录路径。
+
+				4， ls(ll): 都是列出当前目录中的所有文件，只不过ll(两个ll)列出的内容更为详细。
+
+				5， touch : 新建一个文件 如 touch index.js 就会在当前目录下新建一个index.js文件。
+
+				6，rm:  删除一个文件, rm index.js 就会把index.js文件删除.
+
+				7,  mkdir: 新建一个目录,就是新建一个文件夹. 如mkdir src 新建src 文件夹.
+
+				8,  rm -r : 删除一个文件夹,  rm -r src 删除src目录， 好像不能用通配符。
+
+				9,  mv 移动文件, mv index.html src   index.html 是我们要移动的文件, src 是目标文件夹,当然, 这样写,必须保证文件和目标文件夹在同一目录下.
+
+				10, reset 清屏，把git bash命令窗口中的所有内容清空。
+			
+			Promise对象方法
+				A:定义
+					Promise是个构造函数，用来生成promise实例
+					Pending->resolved
+					Pending->rejected
+					var promise = new Promise( (resolve, reject) => {
+						if(异步请求成功){
+							resolve(value)
+						}else {
+							reject(error)
+						}
+					});
+				B: then() || catch()
+					// 不好的写法
+					promise.then( (value) => {
+						// success
+					}, (error) => {
+						// failure
+					});
+					// 好的写法
+					promise.then(()=>{
+					}).catch(()=> {
+					});
+					扩展：
+						两个请求同时发送
+						var p1 = new Promise((resolve, reject) => {
+							// 请求
+							setTimeout(() => {
+								resolve('成功回调参数');
+							}, 3000);
+						});
+						var p2 = new Promise((resolve, reject) => {
+							resolve(p1); // p1 的状态会决定p2的状态
+						});
+						p1.then((result)=>{
+							console.log('then p1');
+						})
+						.catch((err) => {}); 
+						p2.then((result)=>{	
+							console.log('then p2');
+						})
+						.catch((err) => {});
+						// 执行结果 then p1   then p2
+				C: prosime.all()
+					var p = Promise.all([p1, p2, p3]);
+					用于将许多promise包装秤一个新的promise,所有的都变成fullfilled或者其中一个变成rejected
+				D: promise.race()
+					var p = Promise.race([p1, p2, p3]); 只要一个状态发生变化就变化
+				其他：done() finally()
+				
+
+			Http：
+				两部分组成：请求和响应
+				content-type : text/html -html格式    application/json -json格式 	image/jpeg -jpg格式
+
+		2017.06.22
+			箭头函数
+				var a = x => x; // 相当于 return x
+				var b = a(2);
+				console.log('b :', b); // 2
+			Set数据结构
+				1. Set结构的数值不会重复
+					let set = new Set();
+					[2,3,5,4,2,2].forEach( (x) => {
+						set.add(x);
+					});
+					for(let i of set){
+						console.log(i); // 2,3,5,4 数组去重
+					}
+					利用特性可以做的事情：
+						a. 数组去重更简单方法：
+						const set = new Set([2,3,4,5,2,2,1]); // 得到一个类数组的 [2,3,4,5,1]
+
+		2017.06.23
+			Generate函数
+			两大特征：1. function 后面有* ; 2. 函数里面使用yield表达式
+
+		2017.06.26
+			\\192.168.1.50\产品技术\产品BI\项目需求\APP\借款APP\金融生活\v1.5.1\视觉\标注
+
+		2017.06.27
+			reduce:
+				let sum = [0,1,2,3].reduce( (acc, val, index) => {
+					console.log('acc:', acc); // 前一次return回来的结果
+					return acc + val;
+				}, 1);
+			reduce方法有两个参数，第一个书毁掉函数，第二个是初始值
+					var arr = [10,20,30]
+					var reducer = function(sum, item) {
+						return sum + item
+					}
+					var total = arr.reduce(reducer, 40)
+					console.log('total :', total)
+			
+		2017.07.03
+			vue nextTick
+
+			npm install -g cnpm --registry=https://registry.npm.taobao.org
+			npm install -g vue-cli
+
+		2017.07.11
+			页面初始化接口：
+			{
+				"userId": "123456",
+				"points": "100", // 积分
+				"uninterruptedDays": "3", // 连续签到天数
+				"currMonthTotal": "11", // 当月累计签到天数 --
+				"hasGift": "true", 	// 是否可以领取礼包
+				"creditPoint": "750", // 信用分 --
+				"isCreditEnough": "true" // 是否信用分用户
+			}
+			/activePoint/summary
+			{
+				"msgCode":"0", //SUCCESS_CODE = "0";DEFAULT_FAIL_CODE = "1";NOT_LOGIN_FAIL_CODE = "2";
+				"resultMessage":"",
+				"content":{
+					"points": "100",
+					"uninterruptedDays": "3",
+					"currMonthTotal": "11",
+					"hasGift": "true",
+					"latestSigninTime": "2017-07-11 00:00:01",
+					"latestGiftTime": "2017-07-11 00:00:01",
+					"isSignin":"true",
+					"pointsLog": [10,20]
+				}
+			}
+
+			// 登录成功失败回调
+			COMMON.getToken(function(){
+				var counter = 0;
+				var inter = setInterval(function(){
+					if(COMMON.getLoginStatus()) { // 从cookie/localstroge里取
+						clearInterval(inter);
+						//COMMON.closeLoadStatus();
+						next(param);
+						return;
+					}
+					counter ++;
+					if(counter > 50) {
+						clearInterval(inter);
+						COMMON.closeLoadStatus();
+						PHONE.showToast('系统异常，请稍后重试');
+					}
+				},100);
+			},
+			function(){
+				COMMON.closeLoadStatus();
+				PHONE.showToast('系统异常，请稍后重试');
+			}
+			);
+
+			reqwest
+			vue-jsonp
+
+			config/index.js 可以配置build跟dev环境
+
+			http://m.ppdaicdn.com/jrsh/jrsh1.6
+
+		2017.07.20
+			vue的:class={['disappear1' + Days]: ismoving}
+			let propKey = 'foo'; 
+			let obj = {
+			  [propKey]: true, // propKey 是变量，弥补js的object属性名只能是string
+			  ['a' + 'bc']: 123
+			};
+
+		2017.07.24
+			18973000155/111111qq
+			beforeDestroy 不知道为什么没有执行，destroyed 可以执行
+			动画完成事件（浏览器支持兼容）-> vuejs自带的transition （待办）
+
+		2017.07.25
+			express
+
+		2017.07.28
+			Generator函数：
+			返回的遍历器对象
+			function* hello(){
+				yield 'hello'
+				yield 'world'
+				return 'funnn'
+			}
+			var hello1 = hello() // 不会执行
+			hello1(); // {value: 'hello', done:false} // 每次都会返回一个value 跟done的状态机
+			hello1(); // {value: 'world', done: false}
+			hello1(); // {value: 'funnn', done: true}
+			hello1(); // {value: undefined, done:true}
+
+			async function  :
+				a. 每个async 函数都是一个promise
+				b. 可以把程序变成同步
+			await 
+			只需要写一遍
+
+			vue-router:
+			path
+			component
+			name
+			router.push
+			router.replace
+			router.go
+			路由缓存？
+
+		2017.08.01
+			1. 	rem.js 根据设计稿给出的375px做为参考，js计算其他尺寸的document.documentElement.clientWidth，
+				来设置html的font-size.
+			2.  git branch -a : 远程的所有分支
+				git branch : 本地的所有分支
+				git checkout origin/xx/dev 切换到远程的dev分支
+				git branch -b dev --track remotes/origin/dev : 跟踪远程分支且新建一个本地分支dev
+		
+		2017.08.02
+			1. sass 中变量转成字符串:
+				#{}在SASS中的意思是interpolation，可以理解为插值，
+				很多语言中都有这个特性，如PHP。这个操作会将它里面的值转换成字符串。
+				你可以使用SASS中的type-of函数测试。
+			2. sass 的@import:
+				@import 'xx.css' 跟普通导入一个意思。
+				导入的css文件不会合并到编译后的文件中，而是以@import方式存在
+				@import 'xx' 或者 @import 'xx.scss' 会合并文件
+			3. sass 的变量:
+				sass的变量必须是$开头，后面紧跟变量名，而变量值和变量名之间就需要使用冒号(:)分隔开（就像CSS属性设置一样），如果值后面加上!default则表示默认值。
+			4. sass中可用mixin定义一些代码片段，且可传参数，方便日后根据需求调用。从此处理css3的前缀兼容轻松便捷。
+				@mixin box-sizing ($sizing) {
+				    -webkit-box-sizing:$sizing;     
+				       -moz-box-sizing:$sizing;
+				            box-sizing:$sizing;
+				}
+				.box-border{
+				    border:1px solid #ccc;
+				    @include box-sizing(border-box);
+				}
+			5. sass可通过@extend来实现代码组合声明，使代码更加优越简洁
+				.message {
+				  border: 1px solid #ccc;
+				  padding: 10px;
+				  color: #333;
+				}
+
+				.success {
+				  @extend .message;
+				  border-color: green;
+				}
+			6. sass里面的颜色（注意 &:hover 代表 自己:hover ，不用再写在外面）
+				$linkColor: #08c;
+				a {
+				    text-decoration:none;
+				    color:$linkColor;
+				    &:hover{
+				      color:darken($linkColor,10%);
+				    }
+				}
+		2017.08.03
+			1. 首页改版继续完成
+			2. 签到整改 
+			3. vue 的 slot
+			4. vue 的 nextclick
+			5. vue 的源码继续看（原理：https://github.com/DMQ/mvvm）
+			检测登录公用方法   done
+			vue里面的this指向？
+			问题：
+				Computed property 'canClick' is assigned but has no setter:
+			解决：
+				因为canClick在其他地方直接赋值了。
+		2017.08.07
+
+			\\192.168.1.50\产品技术\研发\移动研发\内部共享\前端\金融生活\jrsh1.7
+
+					13120751290  dai123456
+
+		2017.08.14
+			1. 重构签到的积分记录 done
+			2. 整个项目的流程
+			webpack 分析 webpack-bundle-analyzer： npm run build --report
+
+		2017.08.15
+			1. 跟踪旧版本的bug，新版本尽量保持一致
+			2. 优惠券列表页面改成有效期至 done
+			3. vux loading
+			4. infinite-loading 改变文字 : 添加 slot
+			5. 模板字符串 : `${HOST}${PATH}` 或者 嵌入html
+			6. es6 合并数组 [...array1, ...array2] 代替concat
+
+		2017.08.16
+			git操作：
+			git checkout -b test 本地新建一个test分支
+			git pull origin test:test  把远程test拉取到本地test，同时新建本地test
+			git merge dev 把本地dev分支合并到当前的分支
+			git branch 所有本地分支
+			git branc h -a 所有本地远程分支
+			git push origin test:test 把本地test推送到远程test
+
+		2017.08.17
+			1. vue过滤器
+				Vue.filter('formatDate', function(value) { // 注册到全局
+				  let t = new Date(value - 1000)
+				  let _year = t.getFullYear(), _month = t.getMonth() + 1, _date = t.getDate()
+				  let str = _year + '-' + _month + '-' + _date
+				  return str
+				})
+
+		2017.08.25
+			1. 趣图 done
+			2. 身价计算器：  
+				UI： \\192.168.1.50\产品技术\产品BI\项目需求\APP\借款APP\金融生活\v1.4计算器\视觉文档\切图
+			3. 查询不到快递信息的时候会自动跳转到前面页面  done
+
+		2017.08.28
+			签到：
+				如要变更线上地址需要你们做好测试，再由计伟找张盼或者王硕来替换
+			1. 身价计算器UI修改 | 梦想计划怎么公用tpl.vue?   	done
+			2. 看下画圈怎么做的
+			3. 签到积分列表加上月份   												done
+			4. 支付页面修改弹框为弹层，点击确认返回首页        	done
+				// component.$vux.toast.show({ text: data['resultMessage'], type: 'text', width: '16em' })
+        component.popType = 'error'
+        component.errorTitle = '支付失败'
+        component.errorMessage = data.resultMessage
+      5. npm run build --cdn :
+	      a: config index.js : bundleCDN: process.env.npm_config_cdn, // 取的值是--cdn
+		    b: webpack.prod.conf.js:
+		      output: {
+	    			publicPath: config.build.bundleCDN ? config.build.cdn : config.build.assetsPublicPath,
+	    	c: config build.cdn
+	    			cdn: 'http://life.ppdaicdn.com/'
+	    	d: 从而 dist里面index.html 打包出来的地址都会带上http://life.ppdaicdn.com/
+	    6. webpack.prod.conf.js
+	    	var config = require('../config')  -- 指向 config文件夹里面的index.js
+	    7. 看 1.9的需求
+	    8. node.js的process模块
+	    	process模块用来与当前进程互动，可以通过全局变量process访问，不必使用require命令加载。它是一个EventEmitter对象的实例。
+
+	    2017.08.28
+	    	1. 个税计算
+	    		只有选择年终奖所得才显示年终奖  done
+	    		画圈的逻辑
+	    	2. 重构UI跟之前的保持一致
+	    	3. 在app上面测试
+
+	    2017.08.30
+	    	Bugs:
+	    		手机号码有位数限制，并且有空格
+	    		loading 变成方的
+	    		红包弹层为什么弹了很多次？ done
+	    		首页跳链接改成路由 outLink 				done
+	    		让input支持原生事件 ： @keyup.native=formateNumber 				done
+		    		formateNumber(value) {  // 让input只能输入数字
+				      let p = /^\d+$/
+				      if (!p.test(value)) {
+				        value = value + ''
+				        this.income = this.income.replace(/[^0-9]/g, '')
+				      }
+				    }
+				  首页弹红包的逻辑：    			done
+				  	source是birthday：  生日红包 > 借还款红包 > 首充黄包  
+				  	普通入口：    红包>生日礼包>黄包
+
+				  card.png  hot2.png
+
+				  充话费返回的时候没有带上默认参数
+
+				  vue的keep-alive用法：   				done
+				  <keep-alive :include="/house-loan/"> // 匹配正则 不用写:exclude
+			      <router-view></router-view>
+			    </keep-alive>
+
+			    component  内置组件：				done
+			    	<component @calc-result="calcResult" :is="currentView"></component>
+			    	动态组件由 vm 实例的属性值 `currentView` 控制 ，不用写一堆v-if
+
+			    路由router：
+			    	name跟params一起用
+			    	path跟query一起用 	才能获取传过来的参数
+
+				  radialIndicator.js - 画圆canvas
+
+				  在app隐藏所有导航 pageTitle
+
+		2017/09/13
+1. 金融生活1.9.1bug修改(已上线)
+2. 添加信用卡及信用卡列表页及联调 - （测试中）
+3. 添加信用卡表单页，规则校验，格式化信用卡号，添加成功之后弹层，联调 - （测试中）
+4. 银行卡列表页 - （测试中）
+5. 我的订单列表页调整 - （测试中）
+6. 首页入口修改/全部服务页面整体修改（测试中）
+7. 页面向app提供违章及信用卡title（测试中）
+		
+		2017/09/14
+			页面预览: live-server
+			git拉新分支：
+				1. git pull origin  test:test
+				2. git checkout  -b test origin/test
+			获取url地址栏的参数：(不需要用query-string $router，query的时候就是地址栏带参数)
+				let linkToHttpUrl = this.$route.query.linkTo
+			
+		
+		2017/09/15
+			日期格式都改成/
+
+		2017/09/18
+			PPDWebUI.CommonService.setBounces({bounces:false},function(data){
+				log('回弹设置成功');
+			},function(err){
+				log(err||'回弹设置失败');
+			})
+
+
+			浦发银行	2	浦发银行	
+			平安银行	3	平安银行	
+			广发银行	4	广发银行	
+			中国邮政储蓄银行	5	中国邮政储蓄银行	
+			中国光大银行	6	中国光大银行	
+			交通银行	8	交通银行	
+			中国工商银行	10	中国工商银行	
+			中信银行	11	中信银行	
+			招商银行	12	招商银行	
+			中国银行	13	中国银行	
+			中国建设银行	14	中国建设银行	
+			中国民生银行	15	中国民生银行	
+			中国农业银行	16	中国农业银行	
+			兴业银行	17	兴业银行	
+
+		2017/09/21
+			beforeRouteEnter(to, from, next) {
+				// 在这里不能用this，还没有获取到组件实例
+				next(vm => {})
+			}
+			beforeRouteLeave(to, from) {
+				// 可以用this
+			}
+
+		2017/09/22
+			line613:
+			function isNative (Ctor) {
+				return typeof Ctor === 'function' && /native code/.test(Ctor.toString())
+			}
+
+			数组includes
+			var arr = [1,2,3,4];
+			arr.includes(2); // true
+
+			es6 proxy:
+			var obj = new Proxy({}, {
+				get: function (target, key, receiver) {
+					console.log(`getting ${key}!`);
+					return Reflect.get(target, key, receiver);
+				},
+				set: function (target, key, value, receiver) {
+					console.log(`setting ${key}!`);
+					return Reflect.set(target, key, value, receiver);
+				}
+			});
+			// 上面代码对一个空对象架设了一层拦截，重定义了属性的读取（get）和设置（set）行为。
+			get：拦截的是获取属性
+			set: 拦截的是设置属性
+			apply: 拦截的是把proxy实例当做函数调用
+			has: 拦截 'property' in object
+
+			Reflect:
+				var obj = {a: 11}
+				'a' in obj; // true 老写法
+				Reflect.has(obj1, 'a') // 新写法
+				
+
+		2017/09/26
+		1.9.3前端排期
+			'hd' -> 'hs'
+			交罚：
+				车辆列表(空/不为空),
+				添加车辆及检测是否可以领取优惠(在列表页发接口,需要检测来源页面是否是添加车辆),
+				用户点击车辆卡片会查询当前车辆信息的违章情况  +1
+				活动页及埋点  +1
+				交通交罚前端优化： +0.5
+					1.“已处理”记录中，违章详情页面的服务费不显示  done
+					2.退款中的展示文案（若您已支付，订单金额将返回到您绑定的银行卡中）
+				首页优惠券提示只显示1次----  done
+			流量活动：
+				支付结果页修改及弹层，立即领取&立即使用埋点  +0.5
+				检查相关联页面(流量充值页面及优惠券页面)  +0.5
+			其他优化： 
+				订单/首充优惠券/支付/爱回收频道位置调整  +1
+			联调： + 1
+			UI调整：+ 0.5
+			Bugs:
+				修复了优惠券列表页Bug,
+				支付结果页没有充值账户bug及仅在处理中才定时再次调用接口bug
+
+		2017/10/11
+			git:
+				Git 并不保存这些前后变化的差异数据。实际上，Git 更像是把变化的文件作快照后，记录在一个微型的文件系统中。每次提交更新时，它会纵览一遍所有文件的指纹信息并对文件作一快照，然后保存一个指向这次快照的索引。
+				为提高性能，若文件没有变化，Git 不会再次保存，而只对上次保存的快照作一链接。
+
+			find
+
+			{
+				"msgCode": "0",
+				"resultMessage": "操作成功",
+				"content": {
+						"result": 0,
+						"codeMsg": null,
+						"resultMessage": "响应成功",
+						"content": null,
+						"configs": "[{\"discountPercent\":\"1.00\",\"discountAmt\":\"5\",\"maxAmt\":\"20.00\",\"img\":\"https://life.ppdaicdn.com/xxx.png 
+
+		\",\"activeDays\":\"1\",\"calculateType\":\"0\"}]"
+				}
+		}
+			2017/10/17
+			1. vue一个变量在页面打印出来始终是false, 但是v-if="这个变量"不起作用，还是显示。
+				注意 false 可能是字符串'false', 我在这里是因为localStorage.getItem('xxx')返回的都是一个字符串。
+			2. Vue.set(target, index, value)
+				 Vue.set(item, value)
+				这里target是个数组,index是索引
+				
+				数组更新检测
+					A: 变异方法
+					Vue 包含一组观察数组的变异方法，所以它们也将会触发视图更新。这些方法如下：
+					push()
+					pop()
+					shift()
+					unshift()
+					splice()
+					sort()
+					reverse()
+					你打开控制台，然后用前面例子的 items 数组调用变异方法：example1.items.push({ message: 'Baz' }) 。
+
+					B: 替换数组
+					变异方法 (mutation method)，顾名思义，会改变被这些方法调用的原始数组。相比之下，也有非变异 (non-mutating method) 方法，例如：filter(), concat() 和 slice() 。这些不会改变原始数组，但总是返回一个新数组。当使用非变异方法时，可以用新数组替换旧数组：
+					example1.items = example1.items.filter(function (item) {
+						return item.message.match(/Foo/)
+					})
+					你可能认为这将导致 Vue 丢弃现有 DOM 并重新渲染整个列表。幸运的是，事实并非如此。Vue 为了使得 DOM 元素得到最大范围的重用而实现了一些智能的、启发式的方法，所以用一个含有相同元素的数组去替换原来的数组是非常高效的操作。
+					#注意事项
+						由于 JavaScript 的限制，Vue 不能检测以下变动的数组：
+						当你利用索引直接设置一个项时，例如：vm.items[indexOfItem] = newValue
+						当你修改数组的长度时，例如：vm.items.length = newLength
+						为了解决第一类问题，以下两种方式都可以实现和 vm.items[indexOfItem] = newValue 相同的效果，同时也将触发状态更新：
+						// Vue.set
+						Vue.set(example1.items, indexOfItem, newValue)
+						// Array.prototype.splice
+						example1.items.splice(indexOfItem, 1, newValue)
+						为了解决第二类问题，你可以使用 splice：
+						example1.items.splice(newLength)
+
+			2017/10/18
+					Vue的自定义指令(el, binding)
+
+			2017/10/20
+					Promise.resolve()
+					有时需要将现有对象转为Promise对象，Promise.resolve方法就祈祷这个作用。
+					Prosimise.resolve('foo')
+					等价于： new Promise(resolve => resolve('foo'))
+					这个方法的参数分成四种情况：
+					1. 参数是一个Promise实例
+					2. 参数是一个thenable对象
+						thenable对象指的是具有then方法的对象，比如：
+						let thenable = {
+							then : function(resolve, reject) {
+								console.log(11)
+								resolve(42)
+							}
+						};
+						let p1 = Promise.resolve(thenable);
+						p1.then(function(value){
+							console.log(22)
+							console.log(value)
+						})
+					3. 参数不是具有then方法的对象。或者根本就不是对象
+					4. 不带有任何参数
+					var p = Prosime.resolve();
+					p.then(() => {})
+					
+		2017/10/25
+			1.9.4待修复bug
+					立即使用交罚的优惠券添加couponId
+		
+		2017/10/27
+			双十一活动页静态页面及相关弹层
+			首页banner done
+			页面间链接跳转(完成充值之后回到活动页)
+			倒计时
+			联调：
+				A.活动初始化 （奖品状态，任务状态）
+				B.奖品领取
+
+		2017/11/1
+			页面未引用的图片不会被打包进去，所以在js里面require进来，但是这个变量不被使用会报错，
+			So使用// eslint-disable-line 避免报错：
+				let singleBannerSrc = require('../../../assets/img/singles_banner.jpg') // eslint-disable-line
+			也可以直接把图片刚在static里面，Why????
+		2017/11/07
+			流量充值默认页面
+			流量充值商品展示
+			流量充值省内/全国套餐
+			流量充值特惠套餐
+			订单页修改
+			流量充值相关跳转链接修改
+			流量充值UI调整
+
+		2017/11/20
+			vuejs自带的transition:(开始->过程->结束： v-enter是dom节点插入或者显示之后立马移除的class)
+				1. 进入： v-enter  ->  v-enter-active  ->  v-enter-to
+				2. 离开： v-leave  ->  v-leave-active  ->  v-leave-to
+
+				.bounce-enter-active {
+					animation: bounce-in .5s;
+				}
+				.bounce-leave-active {
+					animation: bounce-in .5s reverse;
+				}
+				@keyframes bounce-in {
+					0% {
+						transform: scale(0);
+					}
+					50% {
+						transform: scale(1.5);
+					}
+					100% {
+						transform: scale(1);
+					}
+				}
+
+			<link rel="shortcut icon" href="<%= htmlWebpackPlugin.options.cdn %>static/favicon.ico" type="image/x-icon">
+				
+			1. 修改活动结束时间指令，修改流量bug【今天上线】
+			2. 金融生活2.0静态页面【已完成】
+			3. 首页跑马灯，福利活动scroll插件bug修改【正在开发】
+			4. 2.0接口联调及其他关联首页功能app联调【待开发】
+
+			1. 金融生活2.0精选页面及联调[待提测]
+			2. 金融生活2.0首页红包展示修改[待提测]
+			3. 金融生活精选页神策埋点[开发中]
+			4. 金融生活生活页"全部"页面
+			2017/11/28
+			let pageTpl = r => require.ensure([], () => {
+				r(require('~/common/pageTpl'))
+			}, 'CMChunk')
+			let homeTab = r => require.ensure([], () => {
+				r(require('~/home/homeTab'))
+			}, 'CMChunk')
+			打包的时候chunk -> CMCHUNK ： 作用：合并多个很小的js，减少请求数量
+
+			sass 函数用法：
+				@mixin iconNumber($icon) {
+					background-image: url(#{$baseUrl}/icon_#{$icon}.png) no-repeat;
+				}
+				.icon_one {
+					@include iconNumber("one");
+				}
+			
+精选页头部大banner
+	//m.ppdaicdn.com/jrsh/new/choice/banner_flow.png
+	//m.ppdaicdn.com/jrsh/new/choice/banner_phone.png
+精选页福利活动：
+	//m.ppdaicdn.com/jrsh/new/choice/welfare_1.jpg  -信用卡
+	//m.ppdaicdn.com/jrsh/new/choice/welfare_2.jpg  -优惠不能停
+	//m.ppdaicdn.com/jrsh/new/choice/welfare_3.jpg  -话费
+	//m.ppdaicdn.com/jrsh/new/choice/welfare_4.jpg  -违章代办
+精选页优选分期：
+	//m.ppdaicdn.com/jrsh/new/img/pic_1.jpg
+	//m.ppdaicdn.com/jrsh/new/img/pic_2.jpg
+	//m.ppdaicdn.com/jrsh/new/img/pic_3.jpg
+	//m.ppdaicdn.com/jrsh/new/img/pic_4.jpg
+	//m.ppdaicdn.com/jrsh/new/img/pic_5.jpg
+	//m.ppdaicdn.com/jrsh/new/img/pic_6.jpg
+生活页头部大banner:
+	//m.ppdaicdn.com/jrsh/new/life/banner_redpack.jpg
+生活页推荐专区：
+	//m.ppdaicdn.com/jrsh/new/life/pic_joke.jpg
+	//m.ppdaicdn.com/jrsh/new/life/pic_loan.jpg
+	//m.ppdaicdn.com/jrsh/new/life/pic_shop.jpg
+
+内涵段子： //life.ppdai.com/JokeRoutes
+爆款特卖：http://life.ppdai.com/outerLink?linkTo=//buy.bianxianmao.com?appKey=69eea368bea14ecdbfaf4e8efa58f7ac&appType=h5&appEntrance=1
+借款攻略： http://life.ppdai.com/outerLink?linkTo=http://group.ppdai.com/plugin.php?id=comiis_app_portal&pid=32
+
+2017/12/8
+1.精选页小喇叭提示文案优化,精选页福利活动滑动优化 [已上线]
+2.patae接口 前端控制访问接口次数 [已上线]
+3.金融生活2.1缴费静态页面[已完成]
+4.金融生活2.1缴费水电煤功能，付款收银台及其他[待联调]
+	发版本前去掉注释    // this.getIsShopShow()
+
+2017/12/15
+金融生活2.1
+1. 生活缴费 输入户号页，查询结果页，预交费/账单缴费功能，付款/详情结果页调整，每周任务修改【已提测】
+2. 圣诞节皮肤【今天上线】
+3. UI调整【待开发】
+
+白名单：outerLink?linkTo
+
+17602155025
+
+测试数据
+湖北 武汉
+6802160384 电费
+		</pre>
+
+	<script>
+		var handler = {
+			get: function (target, name) {
+				if (name === 'prototype') {
+					return Object.prototype;
+				}
+				return 'Hello, ' + name;
+			},
+			apply: function (target, thisBinding, args) {
+				return args[0];
+			},
+
+			construct: function (target, args) {
+				return {
+					value: args[1]
+				};
+			}
+		};
+
+		var fproxy = new Proxy(function (x, y) {
+			return x + y;
+		}, handler);
+
+		fproxy(1, 2) // 1
+		new fproxy(1, 2) // {value: 2}
+		fproxy.prototype === Object.prototype // true
+		fproxy.foo // "Hello, foo"
+	</script>
+	<pre>
+		后续：
+			Vuejs源码
+			Vuex原理
+			__proto__
+			左侧导航页面是如何跳转的？
+			分页怎么用的
+			熟悉项目  model_edit jsPlumb
+			看table的element-UI源码
+			本地git add . 错了 ，如何回退？
+
+			https://segmentfault.com/a/1190000002764479
+			http://www.cnblogs.com/yyh1993/p/5847230.html
+			http://www.imooc.com/article/14466
+			做之前的题目
+			看js,css3,h5书籍
+			复习项目
+
+</pre>
+	<script>
+		let url = 'https://www.baidu.com?yx.beta2.pluosi.com'
+		let url1 = 'https://yx.beta2.pluosi.com?qhwghgwqh'
+		let url2 = 'http://yx.beta2.pluosi.com?qhwghgwqh'
+		let url3 = '//yx.beta2.pluosi.com?qhwghgwqh'
+		let arr = ['yx.beta2.pluosi.com', '8.166cai.cn', 'm.aihuishou.com']
+		// let p = /.*(\/\/)?=item/g
+		arr.forEach((item, index) => {
+			// 首先包含
+			let p = new RegExp(`^(http:|https:)?(\/\/)(?=${item})`)
+			console.log('========================', index, p.test(url2))
+			console.log('========================', index, p.test(url3))
+		})
+	</script>
+
+	<script>
+		// 将会包装事件的 debounce 函数
+		// function debounce(fn, delay) {
+		// 	// 维护一个 timer
+		// 	let timer = null;
+		// 	return function() {
+		// 		// 通过 ‘this’ 和 ‘arguments’ 获取函数的作用域和变量
+		// 		let context = this;
+		// 		let args = arguments;
+		// 		clearTimeout(timer);
+		// 		timer = setTimeout(function() {
+		// 			fn.apply(context, args);
+		// 		}, delay);
+		// 	}
+		// }
+		// // 当用户滚动时被调用的函数
+		// function foo() {
+		// 	console.log('You are scrolling!');
+		// }
+		// // 在 debounce 中包装我们的函数，过 2 秒触发一次
+		// let elem = document.getElementById('container');
+		// elem.addEventListener('scroll', debounce(foo, 2000));
+		function debouce(func, delay, immediate) {
+			var timer = null;
+			return function () {
+				var context = this;
+				var args = arguments;
+				if (timer) clearTimeout(time);
+				if (immediate) {
+					//根据距离上次触发操作的时间是否到达delay来决定是否要现在执行函数
+					var doNow = !timer;
+					//每一次都重新设置timer，就是要保证每一次执行的至少delay秒后才可以执行
+					timer = setTimeout(function () {
+						timer = null;
+					}, delay);
+					//立即执行
+					if (doNow) {
+						func.apply(context, args);
+					}
+				} else {
+					timer = setTimeout(function () {
+						func.apply(context, args);
+					}, delay);
+				}
+			}
+		}
+	</script>
+	<p>测试 transformend 事件</p>
+	<div>
+		<div class="squa">
+		</div>
+		<a href="javascript:;" id="btn-move">点击运动</a>
+		<style type="text/css">
+			.squa {
+				width: 200px;
+				height: 200px;
+				background: red;
+			}
+
+			.btn-move {
+				padding: 10px;
+				background: #000;
+				color: #fff;
+				text-decoration: none;
+			}
+
+			.moving {
+				transform: translate(100px, 0);
+				transition: transform 2s;
+			}
+		</style>
+		<script type="text/javascript">
+			// (function () {
+			// 	var oBtn = document.querySelector('#btn-move');
+			// 	var oSqua = document.querySelector('.squa');
+			// 	oBtn.addEventListener('click', function () {
+			// 		console.log('clicked')
+			// 		oSqua.classList.add('moving');
+			// 		// transitionEnd();
+			// 	}, false);
+			// 	var tt = getTran();
+			// 	console.log('tt :', tt)
+			// 	oSqua.addEventListener(tt, function () {
+			// 		console.log('动画结束！')
+			// 	}, false);
+
+			// 	function getTran() {
+			// 		let el = document.createElement('end')
+			// 		let transitions = {
+			// 			'transition': 'transitionend',
+			// 			'OTransition': 'oTransitionEnd',
+			// 			'MozTransition': 'transitionend',
+			// 			'WebkitTransition': 'webkitTransitionEnd'
+			// 		}
+			// 		for (let t in transitions) {
+			// 			if (el.style[t] !== undefined) {
+			// 				return transitions[t]
+			// 			}
+			// 		}
+			// 	}
+			// })()
+		</script>
+	</div>
+	<div>
+		<a id="link" onclick="linkApp" href="javascript:;">点击跳转</a>
+		<script type="text/javascript">
+			function linkApp(e) {
+				var ifr = document.createElement('iframe');
+				ifr.src = "http://www.360doc.com/content/16/0928/21/31277256_594482412.shtml";
+				ifr.style.display = "none";
+				document.body.appendChild(ifr);
+				// window.location.href = "http://www.360doc.com/content/16/0928/21/31277256_594482412.shtml";
+				setTimeout(function () {
+					console.log('I am back !')
+					document.body.removeChild(ifr);
+					window.location.href = 'http://baidu.com';
+				}, 2000);
+			}
+			document.querySelector('#link').addEventListener('click', linkApp);
+		</script>
+	</div>
+	<!-- proxy -->
+	<script>
+		var obj = new Proxy({}, {
+			get: function (target, key, receiver) {
+				console.log(`getting ${key}!`);
+				return Reflect.get(target, key, receiver);
+			},
+			set: function (target, key, value, receiver) {
+				console.log(`setting ${key}!`);
+				return Reflect.set(target, key, value, receiver);
+			}
+		});
+		obj.count = 1
+			++obj.count
+	</script>
+	<iframe src="" id="ac_iframe" style="display: none;"></iframe>
+	<script type="text/javascript">
+		// var iframe = document.getElementById('ac_iframe');
+		// iframe.src = 'http://baidu.com'
+		// iframe.onload = function() {
+		//     console.log('xxload', iframe.src)
+		// };
+		// setTimeout(function() {
+		//     iframe.src = "http://g.pptv.com"
+		// }, 3000)
+	</script>
+	<!-- promise -->
+	<script>
+		// var p1 = new Promise((resolve, reject) => {
+		// 	// 请求
+		// 	setTimeout(() => {
+		// 		resolve('p1 参数');
+		// 	}, 3000);
+		// });
+		// var p2 = new Promise((resolve, reject) => {
+		// 	resolve(p1); // p1 的状态会决定p2的状态
+		// });
+		// p1.then((result)=>{
+		// 	console.log('then p1');
+		// });
+		// p2.then((result)=>{
+		// 	console.log('then p2');
+		// });
+
+		// var promise1 = new Promise(function(resolve, reject) {
+		//   setTimeout(function(){
+		//   	    console.log('resolve 时机-------------->');
+		//   		resolve("2 测试 resolve 时机");
+		//   		// reject("2 测试 resolve 时机"); 
+		//   },2000)
+		// });
+		// var promise2 = new Promise(function(resolve, reject) {
+		//     resolve(promise1) 
+		// }).then(function(a){
+		//     console.log('promise 2 a:',a)
+		// },function(b){
+		//     console.warn(' b:',b,+new Date)
+		// });
+
+		// promise1.then((res)=>{
+		// 	console.log('then promise1', res)
+		// });
+		// resolve 时机-------------->
+		// then promise1 2 测试 resolve 时机
+		// promise 2 a: 2 测试 resolve 时机
+
+
+		function* helloWorldGenerator() {
+			yield 'hello';
+			yield 'world';
+			return 'ending';
+		}
+
+		var hw = helloWorldGenerator();
+		var hw1 = hw.next();
+		console.log('1 hw:', hw);
+		console.log('1 hw1 :', hw1); // {value: 'hello', done: false}
+		hw.next();
+		console.log('3: h3w :', hw.next())
+
+		// var someAsyncThing = function() {
+		//   return new Promise(function(resolve, reject) {
+		//     // 下面一行会报错，因为x没有声明
+		//     resolve(x + 2);
+		//   });
+		// };
+
+		// someAsyncThing().then(function() {
+		//   console.log('everything is great');
+		// });
+
+		// var promise = new Promise(function(resolve, reject) {
+		//   throw new Error('test');
+		// });
+		// promise.then((res) => {
+		// 	console.log(0)
+		// 	console.log('res :', res);
+		// }, (err) => {
+		// 	console.log(1)
+		// 	console.log('rejected err :', err) // 第一个then里面定义过错误处理就不会走catch了
+		// }).catch(function(error) {
+		// 	console.log(2)
+		//   console.log('catch err :', error);
+		// });
+
+		// Error: test
+		// promise setTimeout 例子
+		// function timeout(ms) {
+		//   return new Promise((resolve, reject) => {
+		//     setTimeout(resolve, ms, 'done');// setTimeout(func, time, arg1, arg2 ...) 其中第三个之后的参数都可以作为func的参数
+		//     // 比如 function a (x, y) {console.log(x, y)}
+		//     // setTimeout(a, 1000, 2, 3);// 2, 3
+		//   });
+		// }
+
+		// timeout(100).then((value) => {
+		//   console.log(value);
+		// });
+		// promise 异步加载图片
+		// function loadImageAsync(url) {
+		//   	return new Promise(function(resolve, reject) {
+		// 	    var image = new Image();
+
+		// 	    image.onload = function() {
+		// 	      resolve(image);
+		// 	    };
+
+		// 	    image.onerror = function() {
+		// 	      reject(new Error('Could not load image at ' + url));
+		// 	    };
+
+		// 	    image.src = url;
+		//   	});
+		// }
+
+		// var p1 = new Promise(function (resolve, reject) {
+		// 	console.log('0 p1 :', p1)
+		//   	setTimeout(() => { 
+		//   		console.log('2 p1', p1)
+		//   		reject(new Error('fail'))
+		//   	}, 3000) 
+		// })
+
+		// var p2 = new Promise(function (resolve, reject) {
+		//   	setTimeout(() => {
+		//   		console.log('1 p2')
+		//   		resolve(p1)
+		//   		console.log('3 p2')
+		//   	}, 1000)
+		// })
+
+		// p2.then(result => console.log(result))
+		//   .catch(error => console.log(error))
+		// Error: fail
+	</script>
+	<!-- websocket -->
+	<script>
+		// var ws = new WebSocket('ws://www.websocket.org');
+		// // 当websocket连接建立成功时
+		// ws.onopen = function() {
+		//     console.log('websocket 打开成功');    
+		// };
+
+		// // 当收到服务端的消息时
+		// ws.onmessage = function(e) {
+		//     // e.data 是服务端发来的数据
+		//     console.log(e.data);
+		// };
+
+		// // 当websocket关闭时
+		// ws.onclose = function() {
+		//     console.log("websocket 连接关闭");
+		// };
+
+		// // 当出现错误时
+		// ws.onerror = function() {
+		//     console.log("出现错误");
+		// };
+		// // 发送消息 
+		// ws.send('blablabla')
+
+		// // 关闭socket
+		// ws.close()
+
+		/*
+		 * @example
+		 *  var ws = new Socket('ws://www.websocket.org')
+		 *  ws.on('ready',function() {
+		 *      console.log('服务器连接成功');
+		 *      ws.on('message', function(json) {
+		 *          console.log('一条新消息：'+json.session);
+		 *      });
+		 *      ws.emit("send", {
+		 *          session: "一条新消息"
+		 *      })
+		 *  })
+		 *  ws.on("error",function(){
+		 *      console.log("连接报错")
+		 *  })
+		 *  ws.on("close",function(){
+		 *      console.log("连接关闭");
+		 *  })
+		 */
+
+		// function Socket(url) {
+		//     this.init(url)
+		// }
+
+		// Socket.prototype = {
+		//     init: function(url) {
+		//         this.initListeners()
+		//         this.initSocket(url)
+		//         this.bindSocketEvent()
+		//     },
+
+		//     initSocket: function(url) {
+		//         this.url = url
+		//         this.socket = new WebSocket(url)
+		//         return this
+		//     },
+
+		//     initListeners: function() {
+		//         this.listeners = {}
+		//         return this
+		//     },
+
+		//     bindSocketEvent: function() {
+		//         var me = this
+
+		//         me.socket.onopen = function() {
+		//             me.stopHeartBeat()
+		//             me.startHeartBeat()
+		//             me.clearAll()
+		//             me.trigger('ready')
+		//         }
+
+		//         me.socket.onerror = function(e) {
+		//             me.trigger('close', e)
+		//             me.close()
+		//         }
+
+		//         me.socket.onmessage = function(e) {
+		//             me.refreshServerTimer();
+		//             var json = JSON.parse(e.data);
+		//             me.trigger(json.request.method, json);
+		//         }
+
+		//         return this
+		//     },
+
+		//     reConnect: function() {
+		//         this.initSocket(this.url).bindSocketEvent()
+		//         this.trigger('reconnect')
+		//     },
+
+		//     isOffline: function() {
+		//         return this.socket.readyState != WebSocket.OPEN
+		//     },
+
+		//     on: function(evt, fn) {
+		//         var me = this
+
+		//         if(me.listeners[evt] && me.listeners[evt].length) {
+		//             if(me.listeners[evt].indexOf(fn) == -1){ // 如果没有这个函数
+		//                 me.listeners[evt].push(fn) 	// 加入数组 me.listeners[evt]
+		//             }
+		//         }else {
+		//             me.listeners[evt] = [fn]// 否则 等于
+		//         }
+
+		//         return this
+		//     },
+
+		//     off: function(evt, fn) {
+		//         var me = this
+
+		//         if(me.listeners[evt] && me.listeners[evt].length){
+		//             var index = me.listeners[evt].indexOf(fn)
+
+		//             if(index != -1){
+		//                 me.listeners[evt].splice(index,1) // 删除这个函数
+		//             }
+		//         }
+
+		//         return this
+		//     },
+
+		//     emit: function(method, info) {
+		//         var me = this
+
+		//         me.socket.send(JSON.stringify({
+		//             method: method,
+		//             request: info || ''
+		//         }))
+
+		//         return this
+		//     },
+
+		//     trigger: function(evt) {
+		//         var me = this
+
+		//         if(me.listeners[evt]) {
+		//             for(var i=0; i<me.listeners[evt].length; i++) {
+		//                 me.listeners[evt][i].apply(me, [].slice.call(arguments,1))
+		//             }
+		//         }
+
+		//         return this
+		//     },
+
+		//     startHeartBeat: function() {
+		//         var me = this
+
+		//         me.heartBeatTimer = setInterval(function() {
+		//             me.emit("heartBeat")
+		//         }, 5000)
+		//     },
+
+		//     stopHeartBeat: function() {
+		//         clearInterval(this.heartBeatTimer)
+		//     },
+
+		//     //重新开始断线计时，20秒内没有收到任何正常消息或心跳就超时掉线
+		//     refreshServerTimer: function() {
+		//         var me = this
+
+		//         clearTimeout(me.serverHeartBeatTimer)
+		//         me.serverHeartBeatTimer = setTimeout(function() {
+		//             me.trigger("disconnect")
+		//             me.close()
+		//             me.reConnect()
+		//         }, 20000)
+		//     },
+
+		//     clearAll: function() {
+		//         var tmp = this.listeners['ready']
+
+		//         this.listeners = {}
+		//         this.listeners['ready'] = tmp
+
+		//         return this
+		//     },
+
+		//     close: function(options) {
+		//         var me = this;
+
+		//         clearTimeout(me.serverHeartBeatTimer);
+		//         me.stopHeartBeat();
+		//         me.socket.close();
+
+		//         return this
+		//     }
+		// }
+	</script>
+	<!-- 上一个月 -->
+	<script>
+		// var cur = new Date(),
+		// 	now = +cur;
+
+		// var year = cur.getFullYear();
+		// var month = cur.getMonth();
+		// var date = cur.getDate();
+		// var hour = cur.getHours();
+		// var mins = cur.getMinutes();
+
+
+		// console.log(year, month, date, hour, mins)
+
+		// // var result = Date.
+		// // var lastMonth = Date.setMonth
+		// var a = cur.setMonth( month - 1 );
+
+		// console.log(cur);
+	</script>
+	<div>
+		<form action="http://www.baidu.com">
+			<input type="text" autocomplete="true" />
+			<button type="submit">submit</button>
+		</form>
+	</div>
+</body>
+
+</html>
